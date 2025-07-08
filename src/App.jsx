@@ -12,7 +12,7 @@ const App = () => {
   }, [tasks]);
 
   const addTask = () => {
-    if (input.trim() === '') return;
+    if (!input.trim()) return;
     setTasks([...tasks, input]);
     setInput('');
   };
@@ -22,32 +22,45 @@ const App = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '40px', background: '#eef', minHeight: '100vh' }}>
-      <h2>Todo List</h2>
-      <input
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        placeholder="Enter a task"
-        style={{ padding: '6px', width: '200px' }}
-      />
-      <button onClick={addTask} style={{ marginLeft: '8px', padding: '6px' }}>
-        Add
-      </button>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="bg-white p-6 rounded shadow w-full max-w-md">
+        <h2 className="text-2xl font-semibold text-center mb-4">Todo List</h2>
 
-      <ul style={{ padding: 0, marginTop: '20px', listStyle: 'none' }}>
-        {tasks.length === 0 && <li style={{ color: '#555' }}>No tasks yet</li>}
-        {tasks.map((task, i) => (
-          <li key={i} style={{ marginBottom: '10px' }}>
-            {task}
-            <button
-              onClick={() => removeTask(i)}
-              style={{ marginLeft: '10px', padding: '2px 6px' }}
+        <div className="flex gap-2 mb-4">
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder="Add a task"
+            className="flex-1 border border-gray-300 rounded px-3 py-2"
+          />
+          <button
+            onClick={addTask}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Add
+          </button>
+        </div>
+
+        <ul className="space-y-2">
+          {tasks.length === 0 && (
+            <li className="text-gray-500 text-center">No tasks yet</li>
+          )}
+          {tasks.map((task, i) => (
+            <li
+              key={i}
+              className="flex justify-between items-center border-b pb-1"
             >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+              <span>{task}</span>
+              <button
+                onClick={() => removeTask(i)}
+                className="text-red-500 hover:underline text-sm"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
